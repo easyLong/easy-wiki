@@ -7,12 +7,13 @@ This repository is an LLM-maintained markdown wiki inspired by Karpathy's LLM Wi
 - `raw/` contains qualified complete readable original source files only. Treat these files as read-only evidence, not as a download cache.
 - `wiki/` is the markdown knowledge database. The agent may create and update these files when maintaining the repository directly.
 - `services/wiki-service/` defines the MCP/API access layer for external agents and applications.
+- `services/governance/` defines the generic execution governance layer for external agents and applications.
 - `docs/` contains architecture documents that describe the system outside the wiki database.
 - `AGENTS.md` defines the operating rules for future sessions.
 
-The main repo is intentionally narrowed to the core wiki and access layer. Non-core app experiments and non-core domain expansion have been moved to sibling directories outside this repo and should not be recreated inside the main repo unless explicitly requested.
+The main repo is intentionally narrowed to original evidence, compiled knowledge, the access layer, and generic governance. Non-core app experiments, project-local inputs, capture diagnostics, and non-core domain expansion have been moved to sibling directories outside this repo and should not be recreated inside the main repo unless explicitly requested.
 
-The root `llm-wiki.md` is the original Karpathy reference downloaded by the user. Do not edit it unless explicitly asked.
+The Karpathy LLM Wiki reference belongs under `raw/` like other original evidence. Do not recreate root-level source duplicates.
 
 ## Universal Requirement Intake
 
@@ -61,9 +62,10 @@ This repository should be treated as:
 raw/                 readable original source file store
 wiki/                markdown database
 services/wiki-service/  access layer
+services/governance/    generic governance layer
 ```
 
-Direct file editing is acceptable for repository maintenance sessions. External services, product code, and other agents should use the access layer defined in `services/wiki-service/`.
+Direct file editing is acceptable for repository maintenance sessions. External services, product code, and other agents should use the access layer defined in `services/wiki-service/` and the governance layer defined in `services/governance/`.
 
 The access layer is responsible for:
 
@@ -119,7 +121,7 @@ When the user asks to ingest a source:
 10. Update `wiki/index.md`.
 11. Append to `wiki/log.md`.
 
-Do not treat a bare URL, blocked page, JavaScript shell, HTML wrapper, landing page, index page, or failed capture as raw evidence. Failed capture diagnostics belong under `docs/capture-attempts/`, not `raw/`.
+Do not treat a bare URL, blocked page, JavaScript shell, HTML wrapper, landing page, index page, or failed capture as raw evidence. Failed capture diagnostics and large HTML snapshots belong in a sibling archive such as `C:\Code\easy-wiki-capture-attempts`, not in this core repo.
 
 ## Query Workflow
 
@@ -143,9 +145,11 @@ When asked to lint the wiki, check for:
 - Production templates that no longer match workflows.
 - Topic pages that need synthesis updates.
 
-## AI Short Drama Focus
+## Seed Domain: AI Short Drama
 
-This wiki currently focuses on AI-assisted short drama production, especially:
+This wiki currently contains AI-assisted short drama as the first seeded domain. Treat it as reusable compiled knowledge inside a general wiki platform, not as the only purpose of the repository.
+
+The seed domain covers:
 
 - Script and dramatic structure.
 - Storyboarding and shot design.
@@ -154,7 +158,7 @@ This wiki currently focuses on AI-assisted short drama production, especially:
 - Sound, music, and delivery.
 - Prompting, asset control, and production QA.
 
-Treat the expert pages as reusable thinking models. They are not named real-world authorities; they are role lenses for planning and reviewing AI short drama work.
+Treat the expert pages as reusable thinking models. They are not named real-world authorities; they are role lenses that may be applied by domain-specific consumers such as `easy-wiki-studio`.
 
 ## Scope Control
 

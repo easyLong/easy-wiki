@@ -2,6 +2,9 @@
 type: source
 title: "AI Video Prompting Guides"
 date_added: 2026-05-02
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [ai-video, prompting, sora, runway]
 ---
 

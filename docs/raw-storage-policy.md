@@ -53,8 +53,8 @@ When research finds a strong source, the agent should remind the user before arc
 
 - Source metadata and summaries: `wiki/sources/`
 - Synthesized knowledge: `wiki/concepts/`, `wiki/experts/`, `wiki/domains/`
-- Failed capture diagnostics: `docs/capture-attempts/`
-- HTML snapshots kept only for debugging: `docs/capture-attempts/html-snapshots/`
+- Failed capture diagnostics: sibling archive such as `C:\Code\easy-wiki-capture-attempts`
+- HTML snapshots kept only for debugging: sibling archive such as `C:\Code\easy-wiki-capture-attempts`
 - Architecture and policy: `docs/`
 
 ## Naming

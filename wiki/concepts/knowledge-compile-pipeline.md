@@ -2,7 +2,7 @@
 type: concept
 title: "Knowledge Compile Pipeline"
 created: 2026-05-03
-updated: 2026-05-03
+updated: 2026-05-07
 tags: [llm-wiki, ingest, knowledge-architecture]
 ---
 
@@ -39,7 +39,7 @@ Record:
 
 - URL or file origin.
 - Source metadata in `wiki/sources/`.
-- Capture failures in `docs/capture-attempts/`.
+- Capture failures in a sibling archive such as `C:\Code\easy-wiki-capture-attempts`.
 - Rights and handling notes in the wiki source page.
 
 ### 2. Source Summary

@@ -4,6 +4,9 @@ title: "Randy Thom - Designing A Movie For Sound"
 source_url: "https://filmsound.org/articles/designing_for_sound.htm"
 raw_original_path: raw/randy-thom-为声音设计电影-原文.md
 date_added: 2026-05-02
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [sound-design, randy-thom, storytelling]
 ---
 

@@ -14,12 +14,11 @@ External services should discover domains through the MCP/API access layer, not 
 ## Active Domains
 
 - [[ai-short-drama-domain-overview|AI Short Drama Domain]] - AI-assisted short drama production, from expert research to project execution.
+- [[cross-border-ecommerce-domain-overview|Cross-Border Ecommerce Domain]] - Market entry, channels, marketplace control, fulfillment, localization, and conversion testing.
 
 ## Scope Note
 
-The core repo currently keeps one seed domain so the access layer and compile pipeline stay focused.
-
-Non-core domain exploration has been moved to `C:\Code\easy-wiki-domain-expansion`.
+The core repo may hold durable, source-backed domain knowledge. App experiments, capture diagnostics, and project-heavy domain expansion assets should stay in sibling directories.
 
 ## Links
 

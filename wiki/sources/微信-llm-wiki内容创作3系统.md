@@ -5,6 +5,9 @@ source_id: wechat-uSNIibUFNVnZg1JSoeqtHg
 raw_original_path: raw/微信-llm-wiki内容创作3系统-原文.md
 source_url: "https://mp.weixin.qq.com/s/uSNIibUFNVnZg1JSoeqtHg"
 date_added: 2026-05-03
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [llm-wiki, content-production, knowledge-architecture, zh]
 ---
 

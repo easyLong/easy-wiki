@@ -12,7 +12,15 @@ WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:[#|][^\]]*)?\]\]")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
 WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9-]{2,}|[\u4e00-\u9fff]{2,}")
 ENGLISH_CLAIM_MARKER_RE = re.compile(r"\b(?:should|must|can|not|because|therefore)\b", re.IGNORECASE)
-SOURCE_COMPILE_VERSION = "source-compile-v3"
+SOURCE_COMPILE_VERSION = "source-compile-v4"
+SOURCE_PROMOTION_TARGET_TYPES = {
+    "concept",
+    "comparison",
+    "domain",
+    "expert",
+    "template",
+    "workflow",
+}
 RAW_SOURCE_METADATA_KEYS = {
     "source url": "source_url",
     "url": "source_url",
@@ -233,7 +241,12 @@ def health_check(root: Path | None = None) -> dict[str, Any]:
         "raw_files_missing_source_page": usage["raw_files_missing_source_page"],
         "source_pages_missing_raw_file": usage["source_pages_missing_raw_file"],
         "source_pages_without_usage": usage["source_pages_without_usage"],
+        "source_pages_without_durable_usage": usage["source_pages_without_durable_usage"],
+        "source_pages_pending_review": usage["source_pages_pending_review"],
+        "source_pages_not_promoted": usage["source_pages_not_promoted"],
+        "durable_pages_without_source_context": usage["durable_pages_without_source_context"],
         "source_usage": usage["sources"],
+        "source_promotion_candidates": promotion_candidates(base)["candidates"],
         "compiled_drafts_pending_review": draft_tracking["pending_review"],
         "compiled_drafts_missing_tracking": draft_tracking["missing_tracking"],
     }
@@ -252,7 +265,18 @@ def source_usage(root: Path | None = None) -> dict[str, Any]:
     raw_to_sources: dict[str, list[str]] = {relpath: [] for relpath in raw_relpaths}
     missing_raw: list[dict[str, str]] = []
     without_usage: list[str] = []
+    without_durable_usage: list[str] = []
+    pending_review: list[str] = []
+    not_promoted: list[str] = []
     source_records: list[dict[str, Any]] = []
+    source_ids = {page.id for page in source_pages}
+    durable_source_targets: dict[str, list[str]] = {}
+
+    for page in pages:
+        if page.type not in SOURCE_PROMOTION_TARGET_TYPES:
+            continue
+        source_links = sorted(link for link in page_links(page) if link in source_ids)
+        durable_source_targets[page.id] = source_links
 
     for source in source_pages:
         raw_paths = source_raw_paths(source)
@@ -262,26 +286,57 @@ def source_usage(root: Path | None = None) -> dict[str, Any]:
             else:
                 missing_raw.append({"source": source.id, "raw_path": raw_path})
         outbound = [link for link in page_links(source) if link in catalog and link != source.id]
+        durable_outbound = [
+            link
+            for link in outbound
+            if catalog[link].type in SOURCE_PROMOTION_TARGET_TYPES
+        ]
         inbound = backlinks(source.id, base)
         meaningful_inbound = [
             page_id
             for page_id in inbound
             if catalog.get(page_id) and catalog[page_id].type not in {"index", "log", "source"}
         ]
+        durable_backlinks = [
+            page_id
+            for page_id in inbound
+            if catalog.get(page_id) and catalog[page_id].type in SOURCE_PROMOTION_TARGET_TYPES
+        ]
         feeds_pages = sorted(set(outbound + meaningful_inbound))
+        durable_usage_pages = sorted(set(durable_backlinks))
         if not feeds_pages:
             without_usage.append(source.id)
+        if not durable_usage_pages:
+            without_durable_usage.append(source.id)
+        if source.frontmatter.get("review_status") == "pending-review":
+            pending_review.append(source.id)
+        if source.frontmatter.get("promotion_status") in {"not-promoted", "", None}:
+            not_promoted.append(source.id)
         source_records.append(
             {
                 "id": source.id,
                 "title": source.title,
                 "raw_paths": raw_paths,
+                "status": source.frontmatter.get("status"),
+                "review_status": source.frontmatter.get("review_status"),
+                "promotion_status": source.frontmatter.get("promotion_status"),
+                "compile_version": source.frontmatter.get("compile_version"),
                 "outbound_links": outbound,
+                "durable_outbound_links": durable_outbound,
                 "backlinks": inbound,
                 "meaningful_backlinks": meaningful_inbound,
+                "durable_backlinks": durable_backlinks,
                 "feeds_pages": feeds_pages,
+                "durable_usage_pages": durable_usage_pages,
+                "closure_status": "used" if durable_usage_pages else "needs-promotion",
             }
         )
+
+    durable_without_source_context = [
+        page_id
+        for page_id, source_links in durable_source_targets.items()
+        if not source_links
+    ]
 
     return {
         "raw_files": raw_relpaths,
@@ -290,7 +345,100 @@ def source_usage(root: Path | None = None) -> dict[str, Any]:
         ),
         "source_pages_missing_raw_file": missing_raw,
         "source_pages_without_usage": sorted(without_usage),
+        "source_pages_without_durable_usage": sorted(without_durable_usage),
+        "source_pages_pending_review": sorted(pending_review),
+        "source_pages_not_promoted": sorted(not_promoted),
+        "durable_pages_without_source_context": sorted(durable_without_source_context),
+        "closure_counts": {
+            "raw_files": len(raw_relpaths),
+            "raw_files_missing_source_page": sum(1 for source_ids in raw_to_sources.values() if not source_ids),
+            "source_pages": len(source_pages),
+            "source_pages_without_durable_usage": len(without_durable_usage),
+            "source_pages_pending_review": len(pending_review),
+            "source_pages_not_promoted": len(not_promoted),
+            "durable_pages_without_source_context": len(durable_without_source_context),
+        },
         "sources": sorted(source_records, key=lambda item: item["id"]),
+    }
+
+
+def promotion_candidates(root: Path | None = None) -> dict[str, Any]:
+    base = root or repo_root()
+    pages = list_pages(base)
+    catalog = {page.id: page for page in pages}
+    source_pages = [page for page in pages if page.type == "source" or page.relpath.startswith("wiki/sources/")]
+    candidates: list[dict[str, Any]] = []
+
+    for source in source_pages:
+        outbound = [link for link in page_links(source) if link in catalog]
+        durable_outbound = [
+            link
+            for link in outbound
+            if catalog[link].type in SOURCE_PROMOTION_TARGET_TYPES
+        ]
+        meaningful_backlinks = [
+            page_id
+            for page_id in backlinks(source.id, base)
+            if catalog.get(page_id) and catalog[page_id].type in SOURCE_PROMOTION_TARGET_TYPES
+        ]
+        durable_usage_pages = sorted(set(meaningful_backlinks))
+        review_status = str(source.frontmatter.get("review_status") or "unknown")
+        promotion_status = str(source.frontmatter.get("promotion_status") or "unknown")
+        needs_review = review_status in {"unknown", "pending-review"}
+        needs_promotion = promotion_status in {"unknown", "not-promoted"}
+        lacks_usage = not durable_usage_pages
+
+        if not (needs_review or needs_promotion or lacks_usage):
+            continue
+
+        search_text = " ".join(
+            [
+                source.title,
+                " ".join(str(item) for item in source.frontmatter.values()),
+                " ".join(_keywords(source.body, limit=8)),
+            ]
+        )
+        benchmark_targets = [
+            item
+            for item in _benchmark_candidates(search_text, base)
+            if item["id"] != source.id
+        ]
+        target_ids = _ordered_unique([*durable_outbound, *meaningful_backlinks, *[item["id"] for item in benchmark_targets]])
+        reasons: list[str] = []
+        if needs_review:
+            reasons.append("source draft still needs human review")
+        if needs_promotion:
+            reasons.append("promotion_status is not promoted")
+        if lacks_usage:
+            reasons.append("no durable page currently uses this source")
+
+        candidates.append(
+            {
+                "source_id": source.id,
+                "title": source.title,
+                "raw_paths": source_raw_paths(source),
+                "review_status": review_status,
+                "promotion_status": promotion_status,
+                "durable_usage_pages": durable_usage_pages,
+                "suggested_targets": [
+                    {
+                        "id": page_id,
+                        "title": catalog[page_id].title,
+                        "type": catalog[page_id].type,
+                    }
+                    for page_id in target_ids[:8]
+                    if page_id in catalog and catalog[page_id].type in SOURCE_PROMOTION_TARGET_TYPES
+                ],
+                "benchmark_candidates": benchmark_targets[:8],
+                "reason": "; ".join(reasons),
+                "priority": (10 if lacks_usage else 0) + (5 if needs_promotion else 0) + (3 if needs_review else 0),
+            }
+        )
+
+    candidates.sort(key=lambda item: (-item["priority"], item["source_id"]))
+    return {
+        "candidate_count": len(candidates),
+        "candidates": candidates,
     }
 
 
@@ -331,6 +479,18 @@ def compile_source(
     keywords = _keywords(content_text, limit=10)
     benchmark_candidates = _benchmark_candidates(" ".join([page_title, *keywords]), base)
     suggested_links = [item["id"] for item in benchmark_candidates[:8]]
+    condensed_takeaways = _condensed_takeaways(summary, claims)
+    challenge_notes = _challenge_notes(
+        metadata=raw_document.metadata,
+        claims=claims,
+        headings=headings,
+    )
+    benchmark_notes = _benchmark_notes(benchmark_candidates)
+    compile_promotion_candidates = _compile_promotion_candidates(
+        domain=domain,
+        benchmark_candidates=benchmark_candidates,
+        keywords=keywords,
+    )
     written = False
     log_entry = None
 
@@ -368,7 +528,11 @@ def compile_source(
                 lifecycle=lifecycle,
                 headings=headings,
                 claims=claims,
+                condensed_takeaways=condensed_takeaways,
+                challenge_notes=challenge_notes,
+                benchmark_notes=benchmark_notes,
                 benchmark_candidates=benchmark_candidates,
+                promotion_candidates=compile_promotion_candidates,
                 suggested_links=suggested_links,
             ),
         )
@@ -399,13 +563,17 @@ def compile_source(
         "raw_metadata": raw_document.metadata,
         "headings": headings,
         "claims": claims,
+        "condensed_takeaways": condensed_takeaways,
+        "challenge_notes": challenge_notes,
+        "benchmark_notes": benchmark_notes,
         "keywords": keywords,
         "benchmark_candidates": benchmark_candidates,
+        "promotion_candidates": compile_promotion_candidates,
         "suggested_links": suggested_links,
         "next_actions": [
             "Review the compiled draft for factual accuracy.",
-            "Run the challenge questions against the source before promoting claims.",
-            "Update relevant concept, expert, domain, workflow, or template pages manually with source links.",
+            "Use condensed takeaways, challenge notes, and benchmark targets before promoting claims.",
+            "Update relevant concept, expert, domain, workflow, or template pages with explicit source links.",
             "Run /healthcheck after promotion to confirm source usage and link health.",
         ],
     }
@@ -445,6 +613,45 @@ def compile_missing_sources(
         "would_write_source_ids": would_write,
         "skipped_source_ids": skipped,
         "results": results,
+    }
+
+
+def maintain_sources(
+    *,
+    domain: str | None = None,
+    apply: bool = True,
+    limit: int | None = None,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    base = root or repo_root()
+    compile_result = compile_missing_sources(
+        domain=domain,
+        apply=apply,
+        limit=limit,
+        root=base,
+    )
+    usage = source_usage(base)
+    promotion_report = promotion_candidates(base)
+    health = health_check(base)
+    return {
+        "apply": apply,
+        "mode": "apply" if apply else "dry-run",
+        "domain": domain,
+        "compile": compile_result,
+        "closure_counts": usage["closure_counts"],
+        "promotion_candidate_count": promotion_report["candidate_count"],
+        "promotion_candidates": promotion_report["candidates"],
+        "health_summary": {
+            "broken_links_count": len(health["broken_links"]),
+            "missing_index_entries_count": len(health["missing_index_entries"]),
+            "orphan_pages_count": len(health["orphan_pages"]),
+            "missing_required_sections_count": len(health["missing_required_sections"]),
+            "raw_files_missing_source_page_count": len(health["raw_files_missing_source_page"]),
+            "source_pages_without_durable_usage_count": len(health["source_pages_without_durable_usage"]),
+            "source_pages_pending_review_count": len(health["source_pages_pending_review"]),
+            "source_pages_not_promoted_count": len(health["source_pages_not_promoted"]),
+        },
+        "next_actions": _maintain_next_actions(compile_result, promotion_report, health),
     }
 
 
@@ -735,6 +942,86 @@ def _claims_from_text(text: str, limit: int = 10) -> list[str]:
     return candidates
 
 
+def _condensed_takeaways(summary: str, claims: list[str], limit: int = 3) -> list[str]:
+    candidates = [claim for claim in claims if claim]
+    if len(candidates) < limit:
+        candidates.extend(_sentences_from_text(summary))
+    takeaways: list[str] = []
+    for candidate in candidates:
+        cleaned = _truncate(_clean_line(candidate), 180)
+        if cleaned and cleaned not in takeaways:
+            takeaways.append(cleaned)
+        if len(takeaways) >= limit:
+            break
+    return takeaways
+
+
+def _challenge_notes(
+    *,
+    metadata: dict[str, str],
+    claims: list[str],
+    headings: list[str],
+) -> list[str]:
+    notes: list[str] = []
+    if not metadata.get("source_url"):
+        notes.append("Reliability: no source_url metadata was detected; verify provenance before promotion.")
+    if not metadata.get("published"):
+        notes.append("Freshness: no published date was detected; check whether claims depend on timing.")
+    if claims:
+        notes.append(f"Assumption check: verify evidence for `{_truncate(claims[0], 120)}`.")
+    else:
+        notes.append("Claim check: no strong claims were extracted automatically; review the source manually.")
+    if headings:
+        notes.append(f"Boundary check: extracted structure starts from `{_truncate(headings[0], 80)}`; confirm the source scope.")
+    notes.append("Counterexample check: identify where this advice would fail before updating durable pages.")
+    return notes
+
+
+def _benchmark_notes(benchmark_candidates: list[dict[str, Any]]) -> list[str]:
+    if not benchmark_candidates:
+        return ["No existing durable benchmark target was found; consider creating a concept, workflow, or expert page only if the idea will be reused."]
+    notes: list[str] = []
+    for item in benchmark_candidates[:3]:
+        notes.append(
+            f"Compare against [[{item['id']}]] ({item['type']}) and promote only the reusable delta."
+        )
+    return notes
+
+
+def _compile_promotion_candidates(
+    *,
+    domain: str | None,
+    benchmark_candidates: list[dict[str, Any]],
+    keywords: list[str],
+) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    if domain:
+        candidates.append(
+            {
+                "target_id": domain,
+                "target_type": "domain",
+                "reason": "Source was compiled with this domain binding.",
+            }
+        )
+    for item in benchmark_candidates[:6]:
+        candidates.append(
+            {
+                "target_id": item["id"],
+                "target_type": item["type"],
+                "reason": f"Search overlap score {item['score']} from title/keyword matching.",
+            }
+        )
+    if not candidates and keywords:
+        candidates.append(
+            {
+                "target_id": None,
+                "target_type": "concept",
+                "reason": f"Consider a reusable concept page around `{keywords[0]}` if this idea appears in multiple sources.",
+            }
+        )
+    return candidates
+
+
 def _keywords(text: str, limit: int = 12) -> list[str]:
     stopwords = {
         "the", "and", "that", "with", "for", "this", "from", "into", "your", "wiki", "raw", "source", "article",
@@ -753,6 +1040,28 @@ def _keywords(text: str, limit: int = 12) -> list[str]:
         if word not in stopwords:
             counter[word] += 1
     return [word for word, _count in counter.most_common(limit)]
+
+
+def _sentences_from_text(text: str) -> list[str]:
+    parts = re.split(r"(?<=[.!?。！？])\s+", text)
+    return [_clean_line(part) for part in parts if _clean_line(part)]
+
+
+def _truncate(text: str, limit: int) -> str:
+    cleaned = _clean_line(text)
+    if len(cleaned) <= limit:
+        return cleaned
+    return cleaned[: limit - 3].rstrip() + "..."
+
+
+def _ordered_unique(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        if value and value not in seen:
+            seen.add(value)
+            result.append(value)
+    return result
 
 
 def _is_ignorable_source_line(line: str) -> bool:
@@ -790,15 +1099,23 @@ def _source_page_body(
     lifecycle: SourceLifecycle,
     headings: list[str],
     claims: list[str],
+    condensed_takeaways: list[str],
+    challenge_notes: list[str],
+    benchmark_notes: list[str],
     benchmark_candidates: list[dict[str, Any]],
+    promotion_candidates: list[dict[str, Any]],
     suggested_links: list[str],
 ) -> str:
     domain_line = f"- Domain: [[{domain}]]\n" if domain else ""
     metadata_lines = _source_metadata_lines(metadata)
     lifecycle_lines = _source_lifecycle_lines(lifecycle)
+    takeaway_lines = "\n".join(f"- {takeaway}" for takeaway in condensed_takeaways) or "- No takeaways extracted automatically."
     heading_lines = "\n".join(f"- {heading}" for heading in headings) or "- No headings detected."
     claim_lines = "\n".join(f"- {claim}" for claim in claims) or "- No concrete claims detected automatically."
+    challenge_lines = "\n".join(f"- {note}" for note in challenge_notes) or "- No challenge notes generated."
+    benchmark_note_lines = "\n".join(f"- {note}" for note in benchmark_notes) or "- No benchmark notes generated."
     candidate_lines = "\n".join(f"- [[{item['id']}]] ({item['type']}, score {item['score']})" for item in benchmark_candidates) or "- No benchmark candidates found."
+    promotion_lines = _promotion_candidate_lines(promotion_candidates)
     link_lines = "\n".join(f"- [[{page_id}]]" for page_id in suggested_links) or "- No links suggested."
     return f"""# {title}
 
@@ -817,6 +1134,10 @@ def _source_page_body(
 
 {metadata_lines}
 
+## Condensed Takeaways
+
+{takeaway_lines}
+
 ## Condensed Structure
 
 {heading_lines}
@@ -825,16 +1146,21 @@ def _source_page_body(
 
 {claim_lines}
 
-## Challenge Questions
+## Challenge Notes
 
-- What assumptions does this source rely on?
-- Which claims are context-specific rather than general?
-- What would make the source wrong or incomplete?
-- Does it conflict with existing wiki pages?
+{challenge_lines}
+
+## Benchmark / Transfer
+
+{benchmark_note_lines}
 
 ## Benchmark Candidates
 
 {candidate_lines}
+
+## Promotion Candidates
+
+{promotion_lines}
 
 ## Compile Actions
 
@@ -883,6 +1209,40 @@ def _source_metadata_lines(metadata: dict[str, str]) -> str:
         if value:
             lines.append(f"- {labels[key]}: {value}")
     return "\n".join(lines) if lines else "- No structured metadata detected."
+
+
+def _maintain_next_actions(
+    compile_result: dict[str, Any],
+    promotion_report: dict[str, Any],
+    health: dict[str, Any],
+) -> list[str]:
+    actions: list[str] = []
+    if compile_result["written_count"]:
+        actions.append("Review and promote the newly compiled source drafts into durable pages.")
+    if promotion_report["candidate_count"]:
+        actions.append("Use promotion_candidates to update concepts, experts, domains, workflows, or templates.")
+    if health["broken_links"]:
+        actions.append("Fix broken wikilinks before relying on search or backlinks.")
+    if health["missing_index_entries"]:
+        actions.append("Add missing durable pages to wiki/index.md.")
+    if not actions:
+        actions.append("No source maintenance action is currently required.")
+    return actions
+
+
+def _promotion_candidate_lines(candidates: list[dict[str, Any]]) -> str:
+    if not candidates:
+        return "- No promotion candidates generated."
+    lines: list[str] = []
+    for item in candidates:
+        target_id = item.get("target_id")
+        target_type = item.get("target_type", "page")
+        reason = item.get("reason", "Candidate target.")
+        if target_id:
+            lines.append(f"- [[{target_id}]] ({target_type}) - {reason}")
+        else:
+            lines.append(f"- New {target_type} page - {reason}")
+    return "\n".join(lines)
 
 
 def _compiled_draft_tracking(pages: list[Page]) -> dict[str, list[str]]:

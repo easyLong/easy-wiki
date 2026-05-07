@@ -120,6 +120,10 @@ Directors should plan enough to protect the strongest moment in the scene.
         self.assertNotIn("Source URL:", result["summary"])
         self.assertTrue(result["summary"].startswith("The article body explains"))
         self.assertIn("preparation matters because it improves execution.", result["claims"][0])
+        self.assertLessEqual(len(result["condensed_takeaways"]), 3)
+        self.assertTrue(result["challenge_notes"])
+        self.assertIn("Counterexample check", result["challenge_notes"][-1])
+        self.assertIn("promotion_candidates", result)
 
     def test_compile_source_apply_writes_tracking_fields_and_health_flags(self) -> None:
         self._write(
@@ -143,11 +147,17 @@ Directors should plan enough to protect the strongest moment in the scene.
         self.assertEqual(page.frontmatter["promotion_status"], "not-promoted")
         self.assertEqual(page.frontmatter["compile_version"], wiki_core.SOURCE_COMPILE_VERSION)
         self.assertIn("## Compile Status", page.body)
+        self.assertIn("## Condensed Takeaways", page.body)
+        self.assertIn("## Challenge Notes", page.body)
+        self.assertIn("## Benchmark / Transfer", page.body)
+        self.assertIn("## Promotion Candidates", page.body)
         self.assertIn("Review status: pending-review", page.body)
 
         health = wiki_core.health_check(self.root)
         self.assertEqual(health["compiled_drafts_pending_review"], ["example-source"])
         self.assertEqual(health["compiled_drafts_missing_tracking"], [])
+        self.assertEqual(health["source_pages_pending_review"], ["example-source"])
+        self.assertEqual(health["source_pages_not_promoted"], ["example-source"])
 
     def test_compile_missing_sources_dry_run_uses_would_write_counts(self) -> None:
         self._write("raw/first.md", "# First\n\nBody because it matters.\n")
@@ -189,6 +199,52 @@ Needs review.
 
         self.assertEqual(health["compiled_drafts_pending_review"], ["broken-draft"])
         self.assertEqual(health["compiled_drafts_missing_tracking"], ["broken-draft"])
+
+    def test_source_usage_closure_and_promotion_candidates(self) -> None:
+        self._write(
+            "raw/example-source.md",
+            """# Example Concept Source
+
+Source URL: https://example.com/source
+Published: 2026-01-01
+
+Example concept should connect raw evidence to durable reusable knowledge.
+The workflow must promote useful claims into concept pages because drafts alone are not enough.
+""",
+        )
+        wiki_core.compile_source("raw/example-source.md", apply=True, root=self.root)
+
+        usage = wiki_core.source_usage(self.root)
+
+        self.assertEqual(usage["raw_files_missing_source_page"], [])
+        self.assertEqual(usage["source_pages_without_durable_usage"], ["example-source"])
+        self.assertEqual(usage["source_pages_pending_review"], ["example-source"])
+        self.assertEqual(usage["source_pages_not_promoted"], ["example-source"])
+        self.assertIn("example-concept", usage["durable_pages_without_source_context"])
+        self.assertEqual(usage["closure_counts"]["source_pages_without_durable_usage"], 1)
+
+        report = wiki_core.promotion_candidates(self.root)
+        self.assertEqual(report["candidate_count"], 1)
+        self.assertEqual(report["candidates"][0]["source_id"], "example-source")
+        self.assertGreater(report["candidates"][0]["priority"], 0)
+
+    def test_maintain_sources_compiles_and_reports_closure(self) -> None:
+        self._write(
+            "raw/example-source.md",
+            """# Example Source
+
+Source URL: https://example.com/source
+
+The article body explains why preparation matters because it improves execution.
+""",
+        )
+
+        result = wiki_core.maintain_sources(apply=True, root=self.root)
+
+        self.assertEqual(result["compile"]["written_count"], 1)
+        self.assertEqual(result["closure_counts"]["raw_files_missing_source_page"], 0)
+        self.assertEqual(result["promotion_candidate_count"], 1)
+        self.assertIn("Review and promote", result["next_actions"][0])
 
 
 if __name__ == "__main__":

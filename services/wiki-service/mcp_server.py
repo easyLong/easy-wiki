@@ -15,9 +15,11 @@ from wiki_core import (
     health_check,
     lint,
     list_pages,
+    maintain_sources,
     page_detail,
     page_links,
     page_record,
+    promotion_candidates,
     search_pages,
     source_usage,
 )
@@ -128,6 +130,16 @@ def _tool_definitions() -> list[dict[str, Any]]:
             },
         },
         {
+            "name": "wiki_promotion_candidates",
+            "title": "Source Promotion Candidates",
+            "description": "List source drafts that need review, promotion, or durable usage.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": False,
+            },
+        },
+        {
             "name": "wiki_append_log",
             "title": "Append Wiki Log",
             "description": "Append an entry to wiki/log.md.",
@@ -177,6 +189,20 @@ def _tool_definitions() -> list[dict[str, Any]]:
             "name": "wiki_compile_missing_sources",
             "title": "Compile Missing Sources",
             "description": "Scan raw/ for files without source pages and compile them in batch.",
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "domain": {"type": "string"},
+                    "apply": {"type": "boolean"},
+                    "limit": {"type": "integer", "minimum": 1},
+                },
+                "additionalProperties": False,
+            },
+        },
+        {
+            "name": "wiki_maintain_sources",
+            "title": "Maintain Sources",
+            "description": "Compile new raw files and report review, promotion, and source closure status.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -287,6 +313,9 @@ def _call_tool(name: str, args: dict[str, Any]) -> Any:
     if name == "wiki_source_usage":
         return source_usage()
 
+    if name == "wiki_promotion_candidates":
+        return promotion_candidates()
+
     if name == "wiki_append_log":
         category = _optional_string(args, "category") or "note"
         message = _require_string(args, "message")
@@ -305,6 +334,12 @@ def _call_tool(name: str, args: dict[str, Any]) -> Any:
         apply = _optional_bool(args, "apply", True)
         limit = None if "limit" not in args else _optional_int(args, "limit", 1)
         return compile_missing_sources(domain=domain, apply=apply, limit=limit)
+
+    if name == "wiki_maintain_sources":
+        domain = _optional_string(args, "domain")
+        apply = _optional_bool(args, "apply", True)
+        limit = None if "limit" not in args else _optional_int(args, "limit", 1)
+        return maintain_sources(domain=domain, apply=apply, limit=limit)
 
     if name in {"wiki_compile_source", "wiki_ingest_source"}:
         source_path = _require_string(args, "source_path")

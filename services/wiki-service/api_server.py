@@ -13,10 +13,12 @@ from wiki_core import (
     health_check,
     lint,
     list_pages,
+    maintain_sources,
     page_detail,
     page_links,
     page_record,
     backlinks,
+    promotion_candidates,
     search_pages,
     source_usage,
 )
@@ -52,6 +54,10 @@ class WikiRequestHandler(BaseHTTPRequestHandler):
 
         if path == "/sources/usage":
             self._json(source_usage())
+            return
+
+        if path == "/sources/promotion-candidates":
+            self._json(promotion_candidates())
             return
 
         if path.startswith("/pages/") and path.endswith("/links"):
@@ -109,6 +115,18 @@ class WikiRequestHandler(BaseHTTPRequestHandler):
                     limit=limit,
                 )
                 status = 201 if result["written_count"] else 200
+                self._json(result, status=status)
+                return
+
+            if path == "/maintain-sources":
+                limit_value = payload.get("limit")
+                limit = int(limit_value) if limit_value is not None else None
+                result = maintain_sources(
+                    domain=payload.get("domain"),
+                    apply=bool(payload.get("apply", True)),
+                    limit=limit,
+                )
+                status = 201 if result["compile"]["written_count"] else 200
                 self._json(result, status=status)
                 return
 

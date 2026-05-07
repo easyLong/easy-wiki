@@ -4,6 +4,9 @@ title: "LLM Wiki"
 author: "Andrej Karpathy"
 raw_original_path: raw/karpathy-llm-wiki-原文.md
 date_added: 2026-05-02
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [llm, wiki, knowledge-management]
 ---
 

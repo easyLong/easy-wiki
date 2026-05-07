@@ -8,6 +8,9 @@ acquisition_status: link-only-landing-page
 source_quality: landing-page
 evidence_strength: weak
 date_added: 2026-05-02
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [pixar, storytelling, storyboard, film-grammar]
 ---
 

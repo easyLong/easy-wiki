@@ -25,8 +25,10 @@ services/wiki-service/ access layer contract and implementation
 - Get page links.
 - Lint links and run wiki health checks.
 - Track raw/source usage.
+- Report source drafts that still need durable knowledge promotion.
 - Compile raw source files into source-page drafts.
 - Scan `raw/` for uncompiled originals and batch-compile them.
+- Maintain sources with one command or a raw-folder watch loop.
 - Append log entries through service operations.
 - Create projects from templates.
 
@@ -35,6 +37,7 @@ The current implementation includes HTTP API support for listing, reading, searc
 The current implementation also includes a basic MCP stdio server for initialization, tool listing, and tool calls against the same `wiki_core.py` logic.
 
 Compiled source drafts now include lifecycle tracking such as `review_status`, `promotion_status`, `compiled_at`, and `compile_version`.
+The compiler also writes a three-step compile scaffold: condensed takeaways, challenge notes, and benchmark/transfer targets.
 
 ## Run The HTTP API
 
@@ -57,8 +60,10 @@ GET http://127.0.0.1:8765/pages/editing-expert/links
 GET http://127.0.0.1:8765/lint
 GET http://127.0.0.1:8765/healthcheck
 GET http://127.0.0.1:8765/sources/usage
+GET http://127.0.0.1:8765/sources/promotion-candidates
 POST http://127.0.0.1:8765/compile-source
 POST http://127.0.0.1:8765/compile-missing-sources
+POST http://127.0.0.1:8765/maintain-sources
 POST http://127.0.0.1:8765/projects
 POST http://127.0.0.1:8765/log
 ```
@@ -92,11 +97,37 @@ Implemented tools:
 - `wiki_lint`
 - `wiki_healthcheck`
 - `wiki_source_usage`
+- `wiki_promotion_candidates`
 - `wiki_append_log`
 - `wiki_create_project`
 - `wiki_compile_source`
 - `wiki_compile_missing_sources`
+- `wiki_maintain_sources`
 - `wiki_ingest_source`
+
+## Automatic Source Maintenance
+
+If you want to drop files into `raw/` and have the wiki compile them automatically, start the watcher once:
+
+```powershell
+python -B services/wiki-service/auto_maintain.py --watch
+```
+
+This continuously scans `raw/`, creates missing `wiki/sources/` drafts, updates `wiki/index.md`, appends `wiki/log.md`, and prints the current closure report.
+
+Run one maintenance pass without watching:
+
+```powershell
+python -B services/wiki-service/auto_maintain.py
+```
+
+Preview without writing:
+
+```powershell
+python -B services/wiki-service/auto_maintain.py --dry-run
+```
+
+Important boundary: this automatically handles `raw -> wiki/sources`. Durable promotion from `wiki/sources -> concepts/experts/domains/workflows` still requires an LLM maintainer because it must question, compare, and merge ideas into existing knowledge instead of mechanically copying summaries.
 
 ## Scan Raw Batch
 
@@ -115,6 +146,19 @@ python services/wiki-service/scan_raw.py --apply
 ```
 
 When raw files begin with lines such as `Source URL:`, `Publisher:`, `Expert:`, or `Published:`, the compiler now keeps that metadata separate from the article body so summaries and extracted claims stay cleaner.
+
+## Source Promotion Loop
+
+`raw/` coverage is only the first step. A source is considered closed when a durable page such as a concept, expert, domain, workflow, template, or comparison links back to the source page.
+
+Use:
+
+```text
+GET /sources/usage
+GET /sources/promotion-candidates
+```
+
+to find source drafts that still need review, promotion, or explicit durable-page source links.
 
 ## Run The Tests
 

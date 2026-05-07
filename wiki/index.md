@@ -50,6 +50,7 @@ External services should use MCP/API through `services/wiki-service/`. Direct fi
 ## Domains
 
 - [[ai-short-drama-domain-overview|AI Short Drama Domain]] - Durable knowledge area for AI-assisted short drama production.
+- [[cross-border-ecommerce-domain-overview|Cross-Border Ecommerce Domain]] - Durable knowledge for cross-border market entry, marketplace control, fulfillment, and conversion testing.
 - [[ai-short-drama|AI Short Drama]] - Legacy topic-style entry for AI short drama production concepts.
 - [[ai-short-drama-domain-sources|AI Short Drama Domain Sources]] - Source map for AI short drama expert research.
 - [[ai-short-drama-domain-framework|AI Short Drama Domain Framework]] - Reusable production framework and decision hierarchy.
@@ -59,6 +60,26 @@ External services should use MCP/API through `services/wiki-service/`. Direct fi
 
 ## Sources
 
+- [[richard-linklater-dga-interview-raw|The DGA Interview]] - Compiled source draft.
+- [[peter-jackson-dga-interview-raw|Fantastic Voyage]] - Compiled source draft.
+- [[oksana-tsvigun-us-market-testing-raw|How Foreign Brands Test the U.S. Market]] - Compiled source draft.
+- [[mike-nichols-dga-interview-raw|Working Man]] - Compiled source draft.
+- [[michael-michelini-cross-border-lessons-raw|10 Lessons Learned After 15+ Years Doing Cross Border Trade with Asia and the West]] - Compiled source draft.
+- [[michael-mann-dga-interview-raw|The Study of Mann]] - Compiled source draft.
+- [[kiri-masters-ad-channel-right-brand-raw|Facebook, Google, Amazon: Which Ad Channel Is Right for Your Brand?]] - Compiled source draft.
+- [[kevin-king-top-10-secret-amazon-hacks-raw|Top 10 Secret Amazon Hacks with Kevin King - Part 1]] - Compiled source draft.
+- [[juozas-kaziukenas-amazon-crackdown-raw|Amazon's Crackdown on Chinese Sellers]] - Compiled source draft.
+- [[jessica-lee-gagne-asc-raw|Escape at Dannemora: Q&A With Cinematographer Jessica Lee Gagné]] - Compiled source draft.
+- [[jarin-blaschke-the-lighthouse-asc-raw|Stormy Isle: The Lighthouse]] - Compiled source draft.
+- [[james-thomson-brand-control-raw|Former Amazon Exec on Maintaining Brand Control]] - Compiled source draft.
+- [[greg-mercer-jungle-stix-lessons-raw|3 Lessons Learned Selling $56K on Amazon in 6 Months]] - Compiled source draft.
+- [[christopher-nolan-dga-interview-raw|The Traditionalist]] - Compiled source draft.
+- [[bradley-sutton-dropshipping-case-study-raw|How I Sold $350K on Amazon in 3 Months Using Drop Shipping]] - Compiled source draft.
+- [[bill-butler-jaws-asc-raw|Bill Butler, ASC on His Transition From Tape to Film to 'Jaws']] - Compiled source draft.
+- [[ben-davis-three-billboards-asc-raw|From Intimate Filmmaking to Blockbusters: Ben Davis, BSC]] - Compiled source draft.
+- [[alex-yancher-smarter-paths-global-sales-raw|Smarter Paths to Global Sales]] - Compiled source draft.
+- [[adam-greenberg-the-terminator-asc-raw|Adam Greenberg on The Terminator]] - Compiled source draft.
+- [[aaron-rubin-omnichannel-ecommerce-raw|Omnichannel eCommerce is the New Multichannel]] - Compiled source draft.
 - [[karpathy-llm-wiki资料|Karpathy - LLM Wiki]] - Persistent wiki maintenance pattern.
 - [[微信-llm-wiki内容创作3系统|WeChat Case Study - LLM Wiki 内容创作3.0系统]] - Practical LLM wiki operating example.
 - [[pixar故事与电影语法|Pixar / Khan Academy - The Art of Storytelling]] - Story, visual language, and film grammar.
@@ -87,6 +108,7 @@ External services should use MCP/API through `services/wiki-service/`. Direct fi
 - [[sound-expert|Sound Expert]] - Designs dialogue clarity, music, ambience, and audio cues.
 - [[continuity-expert|Continuity Expert]] - Protects character, prop, costume, location, and timeline consistency.
 - [[prompt-expert|Prompt Expert]] - Translates creative intent into repeatable AI generation prompts.
+- [[cross-border-ecommerce-expert|Cross-Border Ecommerce Expert]] - Designs market-entry, channel, marketplace, fulfillment, localization, and conversion tests.
 
 ## Workflows
 
@@ -96,6 +118,7 @@ External services should use MCP/API through `services/wiki-service/`. Direct fi
 - [[project-start-workflow|Project Start Workflow]] - Project setup inside an existing domain.
 - [[domain-to-project-implementation-workflow|Domain To Project Implementation Workflow]] - Domain understanding to MVP execution.
 - [[ai-short-drama-production-workflow|AI Short Drama Production Workflow]] - Shot-centered AI short drama workflow.
+- [[cross-border-market-entry-workflow|Cross-Border Market Entry Workflow]] - Foreign-market test and launch workflow before scaling spend or inventory.
 
 ## Templates
 

@@ -1651,3 +1651,99 @@ Added a root `README.md` that explains Easy Wiki's role as the core wiki platfor
 ## [2026-05-07] docs
 
 Added `README.zh-CN.md` and language switch links between the English and Chinese root README files.
+
+## [2026-05-07] maintenance
+
+Audited the repository boundary against the narrowed core rule: keep original evidence, compiled knowledge, access services, and generic governance only. Moved `docs/capture-attempts/` to `C:\Code\easy-wiki-capture-attempts\capture-attempts`, removed duplicate project-local `tmp-script.docx`, removed runtime `__pycache__` folders, and removed the root `llm-wiki.md` duplicate because the same original evidence already exists under `raw/karpathy-llm-wiki-原文.md`. Updated policy docs so future capture diagnostics stay outside the core repo.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/aaron-rubin-omnichannel-ecommerce-raw.md` into [[aaron-rubin-omnichannel-ecommerce-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/adam-greenberg-the-terminator-asc-raw.md` into [[adam-greenberg-the-terminator-asc-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/alex-yancher-smarter-paths-global-sales-raw.md` into [[alex-yancher-smarter-paths-global-sales-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/ben-davis-three-billboards-asc-raw.md` into [[ben-davis-three-billboards-asc-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/bill-butler-jaws-asc-raw.md` into [[bill-butler-jaws-asc-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/bradley-sutton-dropshipping-case-study-raw.md` into [[bradley-sutton-dropshipping-case-study-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/christopher-nolan-dga-interview-raw.md` into [[christopher-nolan-dga-interview-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/greg-mercer-jungle-stix-lessons-raw.md` into [[greg-mercer-jungle-stix-lessons-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/james-thomson-brand-control-raw.md` into [[james-thomson-brand-control-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/jarin-blaschke-the-lighthouse-asc-raw.md` into [[jarin-blaschke-the-lighthouse-asc-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/jessica-lee-gagne-asc-raw.md` into [[jessica-lee-gagne-asc-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/juozas-kaziukenas-amazon-crackdown-raw.md` into [[juozas-kaziukenas-amazon-crackdown-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/kevin-king-top-10-secret-amazon-hacks-raw.md` into [[kevin-king-top-10-secret-amazon-hacks-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/kiri-masters-ad-channel-right-brand-raw.md` into [[kiri-masters-ad-channel-right-brand-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/michael-mann-dga-interview-raw.md` into [[michael-mann-dga-interview-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/michael-michelini-cross-border-lessons-raw.md` into [[michael-michelini-cross-border-lessons-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/mike-nichols-dga-interview-raw.md` into [[mike-nichols-dga-interview-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/oksana-tsvigun-us-market-testing-raw.md` into [[oksana-tsvigun-us-market-testing-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/peter-jackson-dga-interview-raw.md` into [[peter-jackson-dga-interview-raw]] draft.
+
+## [2026-05-07] ingest
+
+Compiled raw source `raw/richard-linklater-dga-interview-raw.md` into [[richard-linklater-dga-interview-raw]] draft.
+
+## [2026-05-07] maintenance
+
+Enhanced source compile and usage closure: added three-step compile fields, promotion candidate reporting, durable usage checks, and updated wiki-service docs/tests.
+
+## [2026-05-07] maintenance
+
+Promoted the new film-craft and cross-border ecommerce source drafts into durable wiki knowledge. Updated short-drama director, cinematography, storyboard, and editing expert pages; added cross-border ecommerce domain, expert, and market-entry workflow pages; marked promoted source lifecycle fields.
+
+## [2026-05-07] maintenance
+
+Added automatic source maintenance entry points: one-pass and watch-mode CLI, HTTP `POST /maintain-sources`, and MCP `wiki_maintain_sources`. The automation covers raw-to-source compilation and closure reporting; durable promotion remains an LLM maintainer synthesis step.

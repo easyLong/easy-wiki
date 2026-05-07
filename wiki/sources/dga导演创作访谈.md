@@ -2,6 +2,9 @@
 type: source
 title: "DGA Interviews - Directing Craft"
 date_added: 2026-05-02
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [directing, staging, performance, dga]
 ---
 

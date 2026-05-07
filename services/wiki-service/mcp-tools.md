@@ -87,6 +87,17 @@ Inputs:
 ```
 
 Returns raw files, source pages, backlinks, and durable pages fed by each source.
+Durable usage means a durable page links back to the source page; source-draft candidate links alone do not close the loop.
+
+### `wiki_promotion_candidates`
+
+Inputs:
+
+```json
+{}
+```
+
+Returns source drafts that still need review, promotion, or durable-page usage, with suggested durable targets and a priority score.
 
 ## Write Tools
 
@@ -112,6 +123,7 @@ Inputs:
 
 Creates a source-page draft from a raw original and returns challenge questions, benchmark candidates, suggested links, and next actions.
 The compile step also extracts simple top-of-file source metadata such as URL, publisher, published date, expert, and role when present, and returns lifecycle tracking fields for review and promotion.
+Compiled drafts include the three-step scaffold: condensed takeaways, challenge notes, and benchmark/transfer targets.
 
 ### `wiki_compile_missing_sources`
 
@@ -127,6 +139,20 @@ Inputs:
 
 Scans `raw/` for files without source pages and compiles them in batch.
 Dry-run calls report `would_write_count` and `would_write_source_ids` instead of treating preview items as skipped.
+
+### `wiki_maintain_sources`
+
+Inputs:
+
+```json
+{
+  "domain": "cross-border-ecommerce-domain-overview",
+  "apply": true,
+  "limit": 10
+}
+```
+
+Runs one source maintenance pass: compile missing raw files, report closure counts, report promotion candidates, and return health next actions.
 
 ### `wiki_ingest_source`
 

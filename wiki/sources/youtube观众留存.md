@@ -3,6 +3,9 @@ type: source
 title: "YouTube Help - Audience Retention"
 source_url: "https://support.google.com/youtube/answer/9314415?hl=en"
 date_added: 2026-05-02
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [youtube, retention, editing, analytics]
 ---
 

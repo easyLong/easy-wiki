@@ -26,7 +26,7 @@ Disallowed:
 - Add HTML snapshots or webpage wrappers.
 - Add landing pages, documentation indexes, or weak secondary pages that are not strong enough as durable evidence.
 
-Metadata belongs in `wiki/sources/`. Failed capture diagnostics belong in `docs/capture-attempts/`.
+Metadata belongs in `wiki/sources/`. Failed capture diagnostics and large HTML snapshots belong in a sibling archive such as `C:\Code\easy-wiki-capture-attempts`, not in this core repo.
 
 ### `wiki/sources/`
 

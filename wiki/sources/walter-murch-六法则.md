@@ -5,6 +5,9 @@ raw_original_paths:
   - raw/walter-murch-六法则-原文.md
   - raw/walter-murch-六法则-补充原文.md
 date_added: 2026-05-02
+status: compiled-source
+review_status: reviewed
+promotion_status: promoted
 tags: [editing, walter-murch, rhythm]
 ---
 

@@ -19,6 +19,9 @@ The editing expert shapes time, rhythm, clarity, and retention. The main questio
 - The edit should make imperfect AI clips feel purposeful.
 - Prioritize the cut in this order: emotion, story, rhythm, eye trace, screen plane, then spatial continuity.
 - Use retention data as a diagnosis tool after publishing or test screening.
+- Parallel action can create editorial freedom when the scene is designed around intercut pressure rather than complete continuity.
+- Reaction shots are not filler; they are often the cleanest way to reveal meaning without overcutting dialogue.
+- The editor should know what the director saw on set or in generated variants so the cut starts from intent, not from undifferentiated footage.
 
 ## AI Short Drama Rules
 
@@ -29,6 +32,8 @@ The editing expert shapes time, rhythm, clarity, and retention. The main questio
 - Review rhythm at actual target platform size and speed.
 - If retention drops early, revise the opening promise, conflict reveal, or first visual question.
 - If retention spikes, inspect whether the moment is genuinely compelling or merely confusing.
+- For action or multi-thread sequences, design shot groups by pressure line so they can intercut without requiring complete continuous coverage.
+- When dialogue scenes feel choppy, test a reaction-led version before regenerating every speaking shot.
 
 ## Outputs
 
@@ -46,12 +51,16 @@ The editing expert shapes time, rhythm, clarity, and retention. The main questio
 - Do subtitles land before the viewer needs them?
 - Can a bad AI transition be solved with an insert, reaction, or sound bridge?
 - Does the cut preserve emotion and story even if spatial continuity is imperfect?
+- Is parallel action increasing tension, or merely hiding missing coverage?
+- Are reaction shots placed where the viewer needs to understand the emotional consequence?
 
 ## Research Inputs
 
 - [[walter-murch-六法则]]: provides the editing priority stack for deciding when to accept, hide, or regenerate imperfect AI footage.
 - [[youtube观众留存]]: provides feedback signals such as intros, spikes, dips, and top moments for revising pacing.
 - [[pixar故事与电影语法]]: supports the use of storyreels as early rough cuts for testing timing and story clarity.
+- [[christopher-nolan-dga-interview-raw]]: supports parallel action and single-camera attention as ways to preserve editorial choice without uncontrolled footage.
+- [[ben-davis-three-billboards-asc-raw]]: supports cutting around reactions rather than mechanically cutting to every spoken line.
 
 ## Links
 
