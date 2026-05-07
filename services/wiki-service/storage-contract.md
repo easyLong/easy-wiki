@@ -93,3 +93,21 @@ Catalog record:
 ```
 
 The catalog should be generated, not manually edited.
+
+## Source Usage
+
+Source pages should declare their raw file through one of:
+
+```yaml
+raw_original_path: raw/example.md
+raw_original_paths:
+  - raw/example-a.md
+  - raw/example-b.md
+```
+
+The service derives source usage from:
+
+- Raw files under `raw/`.
+- `wiki/sources/` pages and their `raw_original_path(s)` fields.
+- Outbound wikilinks from source pages.
+- Backlinks from durable concept, expert, domain, workflow, template, and project pages.

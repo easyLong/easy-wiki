@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, directing, performance]
 ---
@@ -46,8 +46,8 @@ The director expert owns interpretation, staging, tone, and performance. The mai
 
 ## Research Inputs
 
-- [[dga-directing-craft]]: emphasizes director prep, actor motivation, staging choices, and holding the whole story.
-- [[pixar-storytelling-film-grammar]]: supports aligning visual language and film grammar with story intention.
+- [[dga导演创作访谈]]: emphasizes director prep, actor motivation, staging choices, and holding the whole story.
+- [[pixar故事与电影语法]]: supports aligning visual language and film grammar with story intention.
 
 ## Links
 

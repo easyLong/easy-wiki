@@ -1,8 +1,8 @@
----
+﻿---
 type: source
 title: "LLM Wiki"
 author: "Andrej Karpathy"
-source_path: "../../llm-wiki.md"
+raw_original_path: raw/karpathy-llm-wiki-原文.md
 date_added: 2026-05-02
 tags: [llm, wiki, knowledge-management]
 ---
@@ -24,7 +24,7 @@ Karpathy proposes a pattern for building personal or team knowledge bases where 
 
 ## Implications For This Repository
 
-- `raw/` stores source evidence.
+- `raw/` stores complete readable original files only.
 - `wiki/` stores maintained knowledge.
 - `AGENTS.md` defines workflow rules.
 - `wiki/index.md` acts as the first retrieval layer.
@@ -38,4 +38,5 @@ Karpathy proposes a pattern for building personal or team knowledge bases where 
 
 ## Sources
 
-- `llm-wiki.md`
+- `raw/karpathy-llm-wiki-原文.md`
+

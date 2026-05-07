@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, sound, music]
 ---
@@ -47,8 +47,8 @@ The sound expert designs clarity, emotional contour, and continuity through dial
 
 ## Research Inputs
 
-- [[randy-thom-designing-for-sound]]: frames sound as part of story design from writing and production onward.
-- [[walter-murch-rule-of-six]]: supports using sound bridges when the emotional cut is stronger than visual continuity.
+- [[randy-thom-为声音设计电影]]: frames sound as part of story design from writing and production onward.
+- [[walter-murch-六法则]]: supports using sound bridges when the emotional cut is stronger than visual continuity.
 
 ## Links
 

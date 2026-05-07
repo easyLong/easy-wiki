@@ -31,7 +31,7 @@ services/wiki-service/              MCP/API 访问层契约
 为每个短剧项目建立一个项目目录，例如：
 
 ```text
-raw/projects/project-001/
+wiki/projects/project-001/
   brief.md
   references/
   generated/

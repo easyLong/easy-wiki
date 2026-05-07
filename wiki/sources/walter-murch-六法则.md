@@ -1,6 +1,9 @@
----
+﻿---
 type: source
 title: "Walter Murch - Rule of Six"
+raw_original_paths:
+  - raw/walter-murch-六法则-原文.md
+  - raw/walter-murch-六法则-补充原文.md
 date_added: 2026-05-02
 tags: [editing, walter-murch, rhythm]
 ---
@@ -38,3 +41,6 @@ AI-generated clips often have continuity problems. This framework helps decide w
 
 - https://www.studiobinder.com/blog/walter-murch-rule-of-six/
 - https://cloud.wikis.utexas.edu/wiki/display/rtf318/Murch%27s%2BRule%2Bof%2BSix
+- Local original: `raw/walter-murch-六法则-原文.md`
+- Local supporting original: `raw/walter-murch-六法则-补充原文.md`
+

@@ -11,7 +11,22 @@ tags: [projects, workflow, execution]
 
 Use this workflow when moving from research into a real project. It keeps project execution connected to the long-term wiki.
 
-## 1. Select Domain
+This workflow must run after [[requirement-intake-workflow]]. Do not create a project until the target output, constraints, and success criteria are clear.
+
+## 1. Confirm Requirements
+
+State:
+
+- Goal.
+- Concrete output.
+- Domain.
+- Constraints.
+- Success criteria.
+- Non-goals.
+
+If these are unclear, return to [[requirement-intake-workflow]].
+
+## 2. Select Domain
 
 Read:
 
@@ -19,7 +34,7 @@ Read:
 - The relevant domain overview, such as [[ai-short-drama-domain-overview]].
 - The relevant domain framework and workflows.
 
-## 2. Create Project Folder
+## 3. Create Project Folder
 
 Create:
 
@@ -29,7 +44,7 @@ wiki/projects/<project-slug>/
 
 Use stable ASCII slugs.
 
-## 3. Create Project Files
+## 4. Create Project Files
 
 Start with:
 
@@ -49,7 +64,7 @@ Domain-specific projects may add files such as:
 - `<project-slug>-shot-list.md`
 - `<project-slug>-prompt-packs.md`
 
-## 4. Bind Expert Roles
+## 5. Bind Expert Roles
 
 For each project, choose the relevant expert pages. Do not load every expert by default.
 
@@ -63,7 +78,7 @@ For AI short drama, the default set is:
 - [[editing-expert]]
 - [[sound-expert]]
 
-## 5. Create Action Plan
+## 6. Create Action Plan
 
 The action plan should list:
 
@@ -76,7 +91,7 @@ The action plan should list:
 
 Use [[project-action-plan-template]].
 
-## 6. Execute Through Artifacts
+## 7. Execute Through Artifacts
 
 During execution, update project files rather than leaving work only in chat.
 
@@ -86,7 +101,7 @@ Examples:
 - A changed workflow insight goes into `<project-slug>-working-notes.md`.
 - A production result goes into review or postmortem.
 
-## 7. Feed Lessons Back
+## 8. Feed Lessons Back
 
 At the end, update:
 
@@ -100,5 +115,6 @@ At the end, update:
 ## Links
 
 - [[project-index]]
+- [[requirement-intake-workflow]]
 - [[new-domain-expert-research-workflow]]
 - [[project-postmortem-template]]

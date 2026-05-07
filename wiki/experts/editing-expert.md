@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, editing, rhythm]
 ---
@@ -49,9 +49,9 @@ The editing expert shapes time, rhythm, clarity, and retention. The main questio
 
 ## Research Inputs
 
-- [[walter-murch-rule-of-six]]: provides the editing priority stack for deciding when to accept, hide, or regenerate imperfect AI footage.
-- [[youtube-audience-retention]]: provides feedback signals such as intros, spikes, dips, and top moments for revising pacing.
-- [[pixar-storytelling-film-grammar]]: supports the use of storyreels as early rough cuts for testing timing and story clarity.
+- [[walter-murch-六法则]]: provides the editing priority stack for deciding when to accept, hide, or regenerate imperfect AI footage.
+- [[youtube观众留存]]: provides feedback signals such as intros, spikes, dips, and top moments for revising pacing.
+- [[pixar故事与电影语法]]: supports the use of storyreels as early rough cuts for testing timing and story clarity.
 
 ## Links
 

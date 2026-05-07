@@ -20,7 +20,7 @@ tags: [ai-short-drama, open-questions]
 
 - Should project pages be written mostly in Chinese, English, or bilingual?
 - Should prompts be stored in project files or separated into reusable prompt libraries?
-- Should final assets be referenced in `raw/projects/` or `wiki/projects/`?
+- Should final assets be referenced in `wiki/projects/` or an external asset store?
 - How often should domain-level synthesis be updated from project postmortems?
 
 ## Next Actions

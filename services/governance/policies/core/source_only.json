@@ -1,0 +1,16 @@
+{
+  "step_id": "core.source_only",
+  "name": "Source Only",
+  "goal": "Force a step to work from original evidence instead of prior summaries or interpretations.",
+  "output_type": "ir",
+  "primary_input_types": ["source", "raw-source", "original", "evidence"],
+  "secondary_input_types": [],
+  "must_read_source": true,
+  "requires_granularity": "document",
+  "detail_loss_tolerance": "low",
+  "provenance_requirement": "source-artifact",
+  "selection_policy": {
+    "strategy": "source_only"
+  },
+  "validation_rules": []
+}

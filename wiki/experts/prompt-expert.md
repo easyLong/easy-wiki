@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, prompting, ai-generation]
 ---
@@ -67,7 +67,7 @@ Each shot prompt should include:
 
 ## Research Inputs
 
-- [[ai-video-prompting-guides]]: aggregates Sora and Runway prompt guidance for subject, setting, action, camera, motion, lighting, pacing, and audio intent.
+- [[ai视频提示词指南]]: aggregates Sora and Runway prompt guidance for subject, setting, action, camera, motion, lighting, pacing, and audio intent.
 - [[continuity-bible]]: supplies stable identity and world constraints for repeatable prompting.
 
 ## Links

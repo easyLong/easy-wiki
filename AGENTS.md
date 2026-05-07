@@ -1,21 +1,51 @@
-# Easy Wiki Agent Rules
+﻿# Easy Wiki Agent Rules
 
 This repository is an LLM-maintained markdown wiki inspired by Karpathy's LLM Wiki pattern.
 
 ## Layers
 
-- `raw/` contains source materials. Treat these files as read-only evidence.
+- `raw/` contains qualified complete readable original source files only. Treat these files as read-only evidence, not as a download cache.
 - `wiki/` is the markdown knowledge database. The agent may create and update these files when maintaining the repository directly.
 - `services/wiki-service/` defines the MCP/API access layer for external agents and applications.
 - `docs/` contains architecture documents that describe the system outside the wiki database.
 - `AGENTS.md` defines the operating rules for future sessions.
 
+The main repo is intentionally narrowed to the core wiki and access layer. Non-core app experiments and non-core domain expansion have been moved to sibling directories outside this repo and should not be recreated inside the main repo unless explicitly requested.
+
 The root `llm-wiki.md` is the original Karpathy reference downloaded by the user. Do not edit it unless explicitly asked.
+
+## Universal Requirement Intake
+
+All tasks start with requirement intake.
+
+Before searching, planning, archiving sources, creating projects, writing code, or changing architecture, clarify the user's goal enough to choose the correct workflow. Use [[requirement-intake-workflow]] as the default entry gate.
+
+Minimum clarity check:
+
+- Goal.
+- Concrete output.
+- Current mode: exploration, planning, research, implementation, review, or maintenance.
+- Constraints and non-goals.
+- Next workflow.
+
+For a new product, game, app, workflow, or version plan, requirement intake is a human deliberation phase. This phase may require repeated back-and-forth with the user until the requirement version is genuinely accepted.
+
+1. Write the interpreted requirement as a named version, such as `v0 需求理解`.
+2. List included scope, excluded scope, default assumptions, and open questions.
+3. Ask the user to challenge, revise, or confirm this version.
+4. Iterate the requirement version when the user changes, corrects, or sharpens the goal.
+5. Do not move to expert research, detailed planning, or implementation until the user confirms the requirement version or explicitly asks to proceed with the stated assumptions.
+
+After the requirement version is confirmed, downstream work can proceed through the expert workflows without repeatedly asking for confirmation at every step. Ask again only when a downstream discovery changes the confirmed requirement, introduces a major tradeoff, or requires a user-owned decision.
+
+If the requirement is unclear, ask focused questions before proceeding. For small obvious maintenance requests, this can be a brief internal check and then execution.
 
 ## Wiki Conventions
 
 - Use Markdown files with YAML frontmatter.
-- Prefer stable ASCII filenames.
+- Prefer stable ASCII filenames for service contracts, code-owned identifiers, and machine-facing files.
+- For user-facing wiki pages, especially project planning pages, source/reference pages, and raw original files, prefer readable Chinese filenames when the user is working in Chinese.
+- Keep machine identifiers in frontmatter, such as `project: douyin-xiyou-gacha-game`, stable even when the visible file name is Chinese.
 - Use Obsidian-style links: `[[page-name]]` or `[[page-name|display text]]`.
 - Keep claims traceable through a `Sources` section when they come from a specific source.
 - When creating or materially changing wiki pages, update `wiki/index.md`.
@@ -28,7 +58,7 @@ The root `llm-wiki.md` is the original Karpathy reference downloaded by the user
 This repository should be treated as:
 
 ```text
-raw/                 evidence store
+raw/                 readable original source file store
 wiki/                markdown database
 services/wiki-service/  access layer
 ```
@@ -51,7 +81,7 @@ The access layer is responsible for:
 
 - `source`: summary of one raw/reference source.
 - `concept`: reusable idea or framework.
-- `expert`: role-specific thinking model for AI short drama production.
+- `expert`: role-specific thinking model for a domain or project.
 - `workflow`: repeatable operating procedure.
 - `template`: reusable production artifact.
 - `comparison`: structured comparison.
@@ -78,29 +108,18 @@ Use domain pages for reusable knowledge. Use project pages for concrete work. Fe
 When the user asks to ingest a source:
 
 1. Read the source.
-2. Create or update a source-centric raw source packet under `raw/sources/<source-id>/` unless a packet already exists.
-3. Record acquisition status: `provided-file`, `local-copy`, `link-only`, `needs-capture`, or `restricted`.
-4. Create or update a `wiki/sources/` summary page.
+2. Place a source under `raw/` only when it is a strong complete original: actual body content, useful for future synthesis, traceable, and at least medium evidence.
+3. Do not put metadata, notes, blocked pages, capture logs, HTML snapshots, webpage wrappers, partial shells, landing pages, documentation indexes, or weak secondary articles in `raw/`.
+4. Use [[source-compile-workflow]] or the service operation `POST /compile-source` to create a source-page draft.
 5. Extract relevant entities, concepts, tools, workflows, and open questions.
 6. Update existing domain/concept/expert pages when the source changes the synthesis.
 7. Create new pages only when they will be reused.
 8. Add cross-links.
-9. Update `wiki/index.md`.
-10. Append to `wiki/log.md`.
+9. Run source usage and health checks when practical.
+10. Update `wiki/index.md`.
+11. Append to `wiki/log.md`.
 
-Do not treat a bare URL as strong evidence. A URL can start the ingest process, but the raw layer should record whether a local copy, source file, transcript, note, or restricted-link-only packet exists.
-
-Raw source packets use this structure:
-
-```text
-raw/sources/<source-id>/
-  source.md
-  captures/
-  assets/
-  notes/
-```
-
-Research batches belong in `raw/batches/` and should reference source ids. Do not nest source packets under batch folders.
+Do not treat a bare URL, blocked page, JavaScript shell, HTML wrapper, landing page, index page, or failed capture as raw evidence. Failed capture diagnostics belong under `docs/capture-attempts/`, not `raw/`.
 
 ## Query Workflow
 
@@ -137,18 +156,29 @@ This wiki currently focuses on AI-assisted short drama production, especially:
 
 Treat the expert pages as reusable thinking models. They are not named real-world authorities; they are role lenses for planning and reviewing AI short drama work.
 
+## Scope Control
+
+Do not continue expanding unrelated domains or app prototypes inside this repository by default.
+
+If the user wants to explore a new domain or build an experimental app, prefer placing that work outside the main `easy-wiki` repo unless the user explicitly says the core repo should absorb it.
+
 ## New Domain Bootstrap Workflow
 
 When the user starts something unfamiliar, use [[new-domain-expert-research-workflow]] as the default approach:
 
-1. Frame the domain and success criteria.
-2. Decompose the domain into expert roles.
-3. Search high-quality sources one expert role at a time.
-4. Ingest sources into `wiki/sources/`.
-5. Compile durable ideas into expert, concept, workflow, and template pages.
-6. Create an execution plan only after the expert framework exists.
-7. Start actual work through concrete artifacts.
-8. Write a postmortem and update the wiki.
+1. Run requirement intake first.
+2. Explore the user's goal, constraints, and success criteria.
+3. Create a research plan before searching.
+4. Decompose the domain into expert roles.
+5. Search high-quality sources one expert role at a time.
+6. Classify found sources by quality and evidence strength.
+7. Remind the user when an important source is worth archiving into `raw/`.
+8. Ingest useful source records into `wiki/sources/`.
+9. Archive only qualified originals into `raw/`.
+10. Compile durable ideas into expert, concept, workflow, and template pages.
+11. Create an execution plan only after the expert framework exists.
+12. Start actual work through concrete artifacts.
+13. Write a postmortem and update the wiki.
 
 Do not jump directly to advice when the user is asking to learn or start a new field from scratch.
 
@@ -156,10 +186,29 @@ Do not jump directly to advice when the user is asking to learn or start a new f
 
 When the user starts actual work inside an existing domain, use [[project-start-workflow]]:
 
-1. Read `wiki/index.md`.
-2. Read the relevant domain overview.
-3. Create a project folder under `wiki/projects/<project-slug>/`.
-4. Create project overview, brief, action plan, decisions, working notes, review, and postmortem files.
-5. Bind only the expert pages needed for that project.
-6. Execute by updating project artifacts.
-7. At the end, write a postmortem and propagate lessons back to durable wiki pages.
+1. Run requirement intake first.
+2. Read `wiki/index.md`.
+3. Read the relevant domain overview.
+4. Create a project folder under `wiki/projects/<project-slug>/`.
+5. Create project overview, brief, action plan, decisions, working notes, review, and postmortem files.
+6. Bind only the expert pages needed for that project.
+7. Execute by updating project artifacts.
+8. At the end, write a postmortem and propagate lessons back to durable wiki pages.
+
+## Domain To Project Implementation Workflow
+
+When a new domain has enough framing to become a concrete MVP, use [[domain-to-project-implementation-workflow]].
+
+Default sequence:
+
+1. Confirm the project framing: problem, target user, first output, success criteria, constraints, and non-goals.
+2. Bind only the expert lenses needed for the project.
+3. Define the smallest MVP that proves the key assumption.
+4. Set architecture boundaries: platform, language/framework, local folder, data, external services, preview/test method.
+5. Use [[implementation-plan-template]] for execution.
+6. Use [[mvp-validation-template]] for validation.
+7. Record decisions in the project decision log.
+8. Feed project lessons back into domain, source, workflow, and template pages.
+
+If the user says "start developing" but the product idea, target user, or success criteria are unclear, create or update requirement and planning artifacts first. Do not pretend implementation is ready.
+

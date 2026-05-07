@@ -1,31 +1,19 @@
 ---
 type: project-index
-updated: 2026-05-03
+updated: 2026-05-06
 ---
 
 # Project Index
 
 ## Purpose
 
-Projects are concrete execution spaces. They turn domain knowledge into artifacts, decisions, outputs, and postmortems.
+Projects are concrete execution spaces. They turn domain knowledge into files, decisions, reviews, and postmortems.
 
-Use projects when the user is doing a real piece of work, not just researching a domain.
+## Current Status
 
-## Active Projects
+The core repo currently keeps project templates only.
 
-No active projects yet.
-
-## Project Lifecycle
-
-```text
-brief
-  -> action plan
-  -> working artifacts
-  -> decisions
-  -> review
-  -> postmortem
-  -> feed lessons back into domain/expert/workflow/template pages
-```
+Experimental and non-core projects have been moved to `C:\Code\easy-wiki-domain-expansion`.
 
 ## Project Templates
 
@@ -42,5 +30,6 @@ Use [[project-start-workflow]].
 
 ## Links
 
+- [[index]]
 - [[domain-index]]
 - [[ai-short-drama-domain-projects]]

@@ -1,4 +1,4 @@
-# Write Policy
+﻿# Write Policy
 
 ## Default Principle
 
@@ -12,24 +12,21 @@ Default: read-only.
 
 Allowed:
 
-- Add new source files.
-- Add source registry files.
-- Add source packets under `raw/sources/`.
-- Add batch manifests under `raw/batches/`.
-- Add local originals, snapshots, notes, transcripts, and assets when permitted.
+- Add qualified complete readable original source files under `raw/`.
 
 Disallowed:
 
 - Rewrite source evidence.
 - Delete source evidence without explicit approval.
+- Add metadata files.
+- Add source cards.
+- Add notes.
+- Add capture logs.
+- Add blocked pages or JavaScript shell pages.
+- Add HTML snapshots or webpage wrappers.
+- Add landing pages, documentation indexes, or weak secondary pages that are not strong enough as durable evidence.
 
-Required for source packets:
-
-- `source.md` metadata file.
-- Acquisition status.
-- Rights or handling note.
-- Stable `source_id`.
-- Source files stored under `raw/sources/<source-id>/`, not under batch folders.
+Metadata belongs in `wiki/sources/`. Failed capture diagnostics belong in `docs/capture-attempts/`.
 
 ### `wiki/sources/`
 
@@ -38,7 +35,13 @@ Default: append/create.
 Allowed:
 
 - Create source summaries.
+- Create compiled source drafts from `raw/` originals.
 - Add implications and links.
+
+Current service behavior:
+
+- `POST /compile-source` creates a source page only when one does not already exist.
+- Existing source pages are not overwritten by the deterministic service operation.
 
 ### `wiki/domains/`
 
@@ -69,6 +72,11 @@ Allowed:
 - Create project folders.
 - Update project artifacts.
 - Record decisions and postmortems.
+
+Current service behavior:
+
+- `POST /projects` creates a project folder and standard project files from built-in templates.
+- Existing project files are skipped rather than overwritten.
 
 ### `wiki/index.md`
 
@@ -102,3 +110,4 @@ Delete or move operations must:
 - Update links and indexes.
 - Add a log entry.
 - Prefer moving within `wiki/` over deletion.
+

@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, continuity, qa]
 ---
@@ -45,8 +45,8 @@ The continuity expert protects consistency across story, character, world, visua
 
 ## Research Inputs
 
-- [[walter-murch-rule-of-six]]: helps rank continuity below emotion, story, rhythm, and eye trace when making edit decisions.
-- [[ai-video-prompting-guides]]: supports using stable character/location descriptors and shot-specific action prompts.
+- [[walter-murch-六法则]]: helps rank continuity below emotion, story, rhythm, and eye trace when making edit decisions.
+- [[ai视频提示词指南]]: supports using stable character/location descriptors and shot-specific action prompts.
 
 ## Links
 

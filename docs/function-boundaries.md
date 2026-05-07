@@ -2,186 +2,291 @@
 
 ## Summary
 
-This repository has four clear responsibilities:
+Easy Wiki has five main responsibilities:
 
-1. Store original evidence in `raw/`.
-2. Store durable knowledge in `wiki/`.
-3. Expose the knowledge database through `services/wiki-service/`.
-4. Guide maintenance through `AGENTS.md`.
+1. preserve qualified original evidence in `raw/`
+2. maintain durable knowledge in `wiki/`
+3. expose controlled access through `services/wiki-service/`
+4. govern execution input and trace contracts through `services/governance/`
+5. guide maintenance through `docs/` and `AGENTS.md`
 
-It is not intended to be a full production application by itself.
+It is not a general product shell, not a media pipeline, and not a full CMS.
 
-## Current Functional Capabilities
+## Boundary Map
 
-### Evidence Storage
+### `raw/`
 
-Owned by `raw/`.
+Owns:
 
-Current capabilities:
+- qualified complete readable original source files
+- long-term evidence storage
 
-- Store source registries.
-- Store source packets with metadata, acquisition status, local files, assets, and notes.
-- Keep durable source packets source-centric under `raw/sources/<source-id>/`.
-- Keep research batch manifests under `raw/batches/`.
-- Store original articles, notes, and future project inputs when available.
-- Preserve evidence separately from synthesized knowledge.
+Does not own:
 
-Boundary:
+- notes
+- metadata cards
+- capture logs
+- failed capture artifacts
+- compiled summaries
+- durable synthesis
 
-- `raw/` should not become the main working area.
-- Do not rewrite original source evidence during synthesis.
-- Bare links are weak evidence. Prefer source packets with local files, transcripts, notes, or explicit `link-only` / `restricted` status.
-- Do not nest source packets under batch folders. A source can belong to multiple batches or domains.
+Boundary rule:
 
-### Knowledge Database
+`raw/` stores evidence only.
 
-Owned by `wiki/`.
+### `wiki/`
 
-Current capabilities:
+Owns:
 
-- Store source summaries.
-- Store durable concepts.
-- Store expert role frameworks.
-- Store domain frameworks.
-- Store project templates.
-- Store project indexes.
-- Store decisions and postmortem indexes.
-- Maintain links through Obsidian-style wikilinks.
+- source-page drafts
+- durable concepts
+- expert role pages
+- domain knowledge
+- project artifacts
+- decisions
+- postmortems
+- index and log
 
-Boundary:
+Does not own:
 
-- `wiki/` is not the runtime service.
-- `wiki/` should not contain application code.
-- External clients should not depend on wiki paths.
+- runtime APIs
+- transport concerns
+- application code
+- binary media serving
 
-### Domain Knowledge
+Boundary rule:
 
-Owned by `wiki/domains/`.
+`wiki/` is the markdown database, not the service runtime.
 
-Current capabilities:
+### `wiki/domains/`
 
-- Maintain long-lived domain context.
-- Group domain-specific workflows and templates.
-- Track domain source maps, open questions, and project lessons.
+Owns:
 
-Boundary:
+- reusable domain structure
+- domain frameworks
+- domain source maps
+- domain workflows
+- domain open questions
+- domain-level project tracking
 
-- Domain pages are reusable knowledge, not one-off project execution files.
-- Domain-specific content should stay under its domain folder.
+Does not own:
 
-### Project Execution Knowledge
+- one-off project execution notes
+- service-layer logic
 
-Owned by `wiki/projects/`.
+Boundary rule:
 
-Current capabilities:
+Domain pages should remain reusable beyond a single project.
 
-- Store concrete project artifacts.
-- Store briefs, action plans, decisions, working notes, reviews, and postmortems.
-- Feed project lessons back into domains and expert pages.
+### `wiki/projects/`
 
-Boundary:
+Owns:
 
-- Project pages are not the source of general truth unless promoted back into domain/expert/workflow/template pages.
+- briefs
+- plans
+- decisions
+- working notes
+- reviews
+- postmortems
 
-### Expert Frameworks
+Does not own:
 
-Owned by `wiki/experts/`.
+- general truth for the whole wiki
+- reusable domain frameworks unless promoted back out
 
-Current capabilities:
+Boundary rule:
 
-- Store reusable expert-role thinking models.
-- Link expert roles to sources and review questions.
-- Guide execution and review across projects.
+Project knowledge is local until deliberately promoted.
 
-Boundary:
+### `wiki/experts/`
 
-- Expert pages are role lenses, not biographies.
-- Expert pages should not become project-specific notes.
+Owns:
 
-### Access Layer
+- reusable role lenses
+- review perspectives
+- expert-style evaluation questions
 
-Owned by `services/wiki-service/`.
+Does not own:
 
-Current capabilities:
+- biographies
+- project-local logs
+- transport or service code
 
-- Service contract for MCP and HTTP API.
-- Read-only HTTP API implementation for list/read/search/link/lint operations.
-- Storage contract, API spec, MCP tool spec, and write policy.
+Boundary rule:
 
-Boundary:
+Expert pages are role abstractions, not case-specific documents.
 
-- It is not yet a complete production service.
-- Write endpoints and MCP runtime are specified but not fully implemented.
-- It should not contain domain knowledge.
+### `services/wiki-service/`
+
+Owns:
+
+- page listing and reading
+- search
+- wikilink and backlink resolution
+- lint and health reporting
+- source usage reporting
+- source compile operations
+- batch scan operations
+- project creation operations
+- controlled log append operations
+- HTTP API transport
+- MCP stdio transport
+
+Does not own:
+
+- domain-specific knowledge
+- source truth itself
+- unrestricted wiki edits
+- automatic durable synthesis decisions
+
+Boundary rule:
+
+The service layer stays generic and policy-aware.
+
+### `services/governance/`
+
+Owns:
+
+- execution artifact schema
+- step contract schema
+- input resolution policy
+- trace record construction
+- reusable governance policy examples
+
+Does not own:
+
+- page storage or path resolution
+- HTTP or MCP access to wiki pages
+- domain-specific execution logic
+- short-drama, research, or coding business rules
+- the final generated artifacts themselves
+
+Boundary rule:
+
+The governance layer defines how apps should use evidence and wiki knowledge reliably; apps still perform the domain work.
+
+## Current Capability Boundary
+
+### Strong Enough Today
+
+- repository structure and scope
+- evidence vs synthesis split
+- query and page inspection
+- link resolution
+- health and usage diagnostics
+- source draft compilation
+- basic batch compile detection
+- project scaffolding
+- basic HTTP and MCP access
+- minimal governance layer for input resolution and trace records
+
+### Intentionally Limited Today
+
+- write surface area
+- durable knowledge promotion
+- conflict resolution between sources
+- automation depth
+- compile intelligence
+
+### Not Yet Mature
+
+- test coverage
+- modularity inside the service core
+- lifecycle tracking for source drafts
+- watch-mode or queue-based ingest
+- stronger transport-contract validation
+- richer governance modules such as output, coverage, write, and version governance
 
 ## Current Non-Goals
 
-This repository is not currently responsible for:
+Easy Wiki is not currently responsible for:
 
-- Hosting a public web application.
-- Storing large binary media assets.
-- Running AI model inference.
-- Generating video or audio.
-- Managing user authentication.
-- Serving as a full CMS.
-- Replacing Obsidian or an editor.
-- Implementing a production vector database.
-- Guaranteeing multi-user write conflict resolution.
+- hosting a public frontend
+- storing large media assets
+- running model inference
+- managing users or auth
+- being a production CMS
+- replacing an editor like Obsidian
+- being a vector database service
+- solving multi-user merge coordination at the service level
 
-These can be added as separate services later.
+Those can exist around the wiki later, but they should not distort the current core.
 
 ## Boundary Risks
 
-### Risk: Wiki Becomes A Dumping Ground
+### Risk 1: The Wiki Becomes A Dumping Ground
+
+Symptoms:
+
+- lots of raw files
+- many source pages
+- little durable synthesis
 
 Mitigation:
 
-- Ingest sources into `wiki/sources/`.
-- Promote durable ideas into domain, expert, concept, workflow, or template pages.
-- Put execution details into `wiki/projects/`.
+- keep `source_usage` and `healthcheck` in the loop
+- require promotion from source pages into reusable pages
+- review project postmortems for reusable lessons
 
-### Risk: External Clients Couple To File Paths
+### Risk 2: External Consumers Couple To Paths
 
-Mitigation:
+Symptoms:
 
-- Use page ids through MCP/API.
-- Let `services/wiki-service/` resolve paths.
-
-### Risk: Project Lessons Do Not Feed Back
+- apps depend on `wiki/.../...md`
+- refactors become dangerous
 
 Mitigation:
 
-- Require postmortems.
-- Update domain and expert pages after project completion.
+- use page ids
+- route reads and writes through the service layer
 
-### Risk: Service Layer Grows Domain Logic
+### Risk 3: Service Layer Starts Encoding Domain Logic
+
+Symptoms:
+
+- AI short drama rules appear in transport or storage code
+- service behavior changes per domain
 
 Mitigation:
 
-- Keep service layer generic.
-- Domain logic belongs in `wiki/`.
-- Workflow orchestration should read wiki pages instead of hard-coding domain rules.
+- keep domain knowledge in markdown pages
+- let workflows read wiki pages instead of hard-coding domain logic
 
-## Maturity State
+### Risk 4: Compile Drafts Accumulate Without Review
 
-| Area | State |
-|---|---|
-| Markdown knowledge database | Usable |
-| AI short drama domain | Seeded |
-| Expert frameworks | Seeded |
-| Project layer | Structured, no active projects yet |
-| Source ingest process | Manual but working |
-| Raw source packets | Source-centric packet structure in place; first batch migrated |
-| Link linting | Manual PowerShell check works |
-| HTTP API | Read-only implementation added, not runtime-verified in this environment |
-| MCP API | Specified, not implemented |
-| Write API | Specified, not implemented |
-| Search | Basic implementation added in Python core |
+Symptoms:
 
-## Next Boundary Improvements
+- many `compiled-draft` pages
+- weak traceability into domain/expert/concept pages
 
-1. Install Python or choose the runtime for `services/wiki-service/`.
-2. Runtime-test the HTTP API.
-3. Implement MCP server using the same wiki core.
-4. Add write operations only after read operations are stable.
-5. Create the first real project and test project-to-domain feedback.
+Mitigation:
+
+- add source lifecycle states
+- add promotion tracking
+- create a review queue for source drafts
+
+### Risk 5: The Service Core Becomes Too Monolithic
+
+Symptoms:
+
+- one file change affects parsing, health, compile, and write behavior
+- harder testing
+
+Mitigation:
+
+- split `wiki_core.py` by responsibility
+- add fixture-driven tests before deeper refactors
+
+## Recommended Boundary Improvements
+
+1. Refactor the service core into smaller modules.
+2. Add tests for parse, search, health, compile, HTTP, and MCP behaviors.
+3. Introduce a source-draft lifecycle and promotion tracking.
+4. Keep write operations narrow until tests and lifecycle semantics are stronger.
+5. Add optional watch-mode ingest only after the core loop is stable.
+
+## Bottom Line
+
+The current boundaries are directionally good.
+
+The main job now is not to expand the system sideways. It is to make the existing boundaries easier to enforce, easier to test, and harder to blur by accident.

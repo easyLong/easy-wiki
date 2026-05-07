@@ -1,43 +1,28 @@
 ---
 type: domain-index
-updated: 2026-05-03
+updated: 2026-05-06
 ---
 
 # Domain Index
 
 ## Purpose
 
-Domains are long-lived knowledge areas. A domain collects topic pages, expert maps, workflows, templates, source clusters, and project lessons for one field.
-
-Use domains when a subject will be reused across many projects.
+Domains are long-lived knowledge areas. A domain collects source clusters, expert maps, workflows, templates, and project lessons for one field.
 
 External services should discover domains through the MCP/API access layer, not by hard-coding paths under `wiki/domains/`.
 
 ## Active Domains
 
-- [[ai-short-drama-domain-overview|AI Short Drama Domain]] - AI-assisted short drama production, from expert research to actual projects.
+- [[ai-short-drama-domain-overview|AI Short Drama Domain]] - AI-assisted short drama production, from expert research to project execution.
 
-## Domain Folder Convention
+## Scope Note
 
-Each domain should have:
+The core repo currently keeps one seed domain so the access layer and compile pipeline stay focused.
 
-- `<domain>-domain-overview.md`
-- `<domain>-domain-sources.md`
-- `<domain>-domain-framework.md`
-- `<domain>-domain-workflows.md`
-- `<domain>-domain-projects.md`
-- `<domain>-domain-open-questions.md`
-
-## When To Create A Domain
-
-Create a domain when:
-
-- The user is starting a field they will revisit.
-- Multiple expert roles are needed.
-- Multiple projects will use the same methods.
-- Sources, workflows, and templates should compound over time.
+Non-core domain exploration has been moved to `C:\Code\easy-wiki-domain-expansion`.
 
 ## Links
 
-- [[new-domain-expert-research-workflow]]
+- [[index]]
 - [[project-index]]
+- [[new-domain-expert-research-workflow]]

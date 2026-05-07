@@ -1,4 +1,4 @@
----
+﻿---
 type: domain-sources
 title: "AI Short Drama Domain Sources"
 updated: 2026-05-03
@@ -15,12 +15,12 @@ This page groups sources used by the AI short drama domain and shows which exper
 
 | Source | Roles Informed | Use |
 |---|---|---|
-| [[pixar-storytelling-film-grammar]] | [[script-expert]], [[storyboard-expert]], [[director-expert]], [[editing-expert]], [[cinematography-expert]] | Story structure, film grammar, storyboarding, storyreels |
-| [[walter-murch-rule-of-six]] | [[editing-expert]], [[storyboard-expert]], [[continuity-expert]] | Cut priority and continuity tradeoffs |
-| [[youtube-audience-retention]] | [[editing-expert]], [[script-expert]] | Retention diagnostics |
-| [[randy-thom-designing-for-sound]] | [[sound-expert]], [[editing-expert]], [[director-expert]] | Early sound design |
-| [[dga-directing-craft]] | [[director-expert]], [[script-expert]], [[storyboard-expert]] | Actor motivation, staging, prep |
-| [[ai-video-prompting-guides]] | [[prompt-expert]], [[continuity-expert]], [[cinematography-expert]] | AI video prompt structure |
+| [[pixar故事与电影语法]] | [[script-expert]], [[storyboard-expert]], [[director-expert]], [[editing-expert]], [[cinematography-expert]] | Story structure, film grammar, storyboarding, storyreels |
+| [[walter-murch-六法则]] | [[editing-expert]], [[storyboard-expert]], [[continuity-expert]] | Cut priority and continuity tradeoffs |
+| [[youtube观众留存]] | [[editing-expert]], [[script-expert]] | Retention diagnostics |
+| [[randy-thom-为声音设计电影]] | [[sound-expert]], [[editing-expert]], [[director-expert]] | Early sound design |
+| [[dga导演创作访谈]] | [[director-expert]], [[script-expert]], [[storyboard-expert]] | Actor motivation, staging, prep |
+| [[ai视频提示词指南]] | [[prompt-expert]], [[continuity-expert]], [[cinematography-expert]] | AI video prompt structure |
 
 ## Source Gaps
 

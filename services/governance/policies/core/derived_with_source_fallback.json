@@ -1,0 +1,16 @@
+{
+  "step_id": "core.derived_with_source_fallback",
+  "name": "Derived With Source Fallback",
+  "goal": "Prefer structured prior work, but require source evidence when the step or available inputs make it necessary.",
+  "output_type": "derived-artifact",
+  "primary_input_types": ["ir", "summary", "plan", "draft"],
+  "secondary_input_types": ["source", "workflow", "expert", "template"],
+  "must_read_source": false,
+  "requires_granularity": "paragraph",
+  "detail_loss_tolerance": "medium",
+  "provenance_requirement": "input-artifacts",
+  "selection_policy": {
+    "strategy": "derived_with_source_fallback"
+  },
+  "validation_rules": []
+}

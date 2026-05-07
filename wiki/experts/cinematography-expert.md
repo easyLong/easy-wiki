@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, cinematography, visual-language]
 ---
@@ -44,8 +44,8 @@ The cinematography expert controls visual grammar: framing, lighting, lens logic
 
 ## Research Inputs
 
-- [[pixar-storytelling-film-grammar]]: supplies visual language and film grammar ideas that connect image design to story communication.
-- [[ai-video-prompting-guides]]: reinforces explicit camera, lighting, and motion descriptions in AI video prompts.
+- [[pixar故事与电影语法]]: supplies visual language and film grammar ideas that connect image design to story communication.
+- [[ai视频提示词指南]]: reinforces explicit camera, lighting, and motion descriptions in AI video prompts.
 
 ## Links
 

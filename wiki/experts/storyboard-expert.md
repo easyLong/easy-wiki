@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, storyboard, shot-design]
 ---
@@ -47,8 +47,8 @@ The storyboard expert converts scenes into intentional shots. The main question 
 
 ## Research Inputs
 
-- [[pixar-storytelling-film-grammar]]: reinforces storyboarding as an iterative process using visual language, film grammar, pitching, feedback, and storyreels.
-- [[walter-murch-rule-of-six]]: helps prioritize emotional and story clarity over lower-level spatial continuity when AI clips are imperfect.
+- [[pixar故事与电影语法]]: reinforces storyboarding as an iterative process using visual language, film grammar, pitching, feedback, and storyreels.
+- [[walter-murch-六法则]]: helps prioritize emotional and story clarity over lower-level spatial continuity when AI clips are imperfect.
 
 ## Links
 

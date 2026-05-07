@@ -1,0 +1,21 @@
+{
+  "step_id": "core.source_plus_derived",
+  "name": "Source Plus Derived",
+  "goal": "Use structured prior work without giving up access to original evidence.",
+  "output_type": "derived-artifact",
+  "primary_input_types": ["ir", "plan", "draft"],
+  "secondary_input_types": ["source", "workflow", "expert", "template"],
+  "must_read_source": true,
+  "requires_granularity": "line",
+  "detail_loss_tolerance": "low",
+  "provenance_requirement": "source-span",
+  "selection_policy": {
+    "strategy": "source_plus_derived"
+  },
+  "validation_rules": [
+    {
+      "id": "no-summary-only",
+      "description": "A production step may not rely only on summaries."
+    }
+  ]
+}

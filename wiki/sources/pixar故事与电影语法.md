@@ -1,7 +1,12 @@
----
+﻿---
 type: source
 title: "Pixar / Khan Academy - The Art of Storytelling"
 source_url: "https://www.khanacademy.org/computing/pixar/storytelling"
+raw_original_paths:
+  []
+acquisition_status: link-only-landing-page
+source_quality: landing-page
+evidence_strength: weak
 date_added: 2026-05-02
 tags: [pixar, storytelling, storyboard, film-grammar]
 ---
@@ -40,3 +45,6 @@ Pixar and Khan Academy present storytelling as an iterative process combining ch
 
 - https://www.khanacademy.org/computing/pixar/storytelling
 - https://www.pixar.com/pixar-in-a-box
+- Raw status: not stored; Pixar landing page was removed from `raw/` because it is not a strong complete expert source.
+- Note: capture a full Khan Academy lesson transcript or official lesson page before treating this as strong evidence.
+

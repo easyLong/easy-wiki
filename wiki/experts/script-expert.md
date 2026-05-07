@@ -1,4 +1,4 @@
----
+﻿---
 type: expert
 tags: [ai-short-drama, script, story]
 ---
@@ -48,8 +48,8 @@ The script expert protects dramatic force. The main question is: why should the 
 
 ## Research Inputs
 
-- [[pixar-storytelling-film-grammar]]: supports iterative story development through pitching, feedback, storyboarding, and storyreels.
-- [[youtube-audience-retention]]: gives post-release feedback signals for diagnosing weak hooks or pacing.
+- [[pixar故事与电影语法]]: supports iterative story development through pitching, feedback, storyboarding, and storyreels.
+- [[youtube观众留存]]: gives post-release feedback signals for diagnosing weak hooks or pacing.
 
 ## Links
 

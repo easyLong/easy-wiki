@@ -1,4 +1,4 @@
----
+﻿---
 type: comparison
 tags: [llm, rag, knowledge-management]
 ---
@@ -21,4 +21,4 @@ Use RAG when the user needs fast lookup over documents. Use an LLM Wiki when the
 ## Links
 
 - [[llm-wiki-pattern]]
-- [[karpathy-llm-wiki]]
+- [[karpathy-llm-wiki资料]]
