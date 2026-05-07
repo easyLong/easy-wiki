@@ -1,0 +1,74 @@
+﻿[
+    {
+        "id":  "pixar-khan-storytelling",
+        "status":  "downloaded",
+        "bytes":  3038,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\pixar-khan-storytelling\\original.html"
+    },
+    {
+        "id":  "pixar-in-a-box",
+        "status":  "downloaded",
+        "bytes":  588074,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\pixar-in-a-box\\original.html"
+    },
+    {
+        "id":  "walter-murch-rule-of-six",
+        "status":  "downloaded",
+        "bytes":  752770,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\walter-murch-rule-of-six\\original.html"
+    },
+    {
+        "id":  "walter-murch-rule-of-six-supporting",
+        "status":  "downloaded",
+        "bytes":  2577046,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\walter-murch-rule-of-six\\supporting-original.html"
+    },
+    {
+        "id":  "youtube-audience-retention",
+        "status":  "failed",
+        "bytes":  0,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\youtube-audience-retention\\original.html",
+        "error":  "无法连接到远程服务器"
+    },
+    {
+        "id":  "randy-thom-designing-for-sound",
+        "status":  "downloaded",
+        "bytes":  64876,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\randy-thom-designing-for-sound\\original.html"
+    },
+    {
+        "id":  "dga-dan-attias-interview",
+        "status":  "failed",
+        "bytes":  0,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\dga-dan-attias-interview\\original.html",
+        "error":  "远程服务器返回错误: (403) 已禁止。"
+    },
+    {
+        "id":  "openai-sora-help",
+        "status":  "failed",
+        "bytes":  0,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\openai-sora-help\\original.html",
+        "error":  "远程服务器返回错误: (403) 已禁止。"
+    },
+    {
+        "id":  "openai-video-generation-api",
+        "status":  "failed",
+        "bytes":  0,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\openai-video-generation-api\\original.html",
+        "error":  "远程服务器返回错误: (403) 已禁止。"
+    },
+    {
+        "id":  "runway-gen3-prompting",
+        "status":  "failed",
+        "bytes":  0,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\runway-gen3-prompting\\original.html",
+        "error":  "远程服务器返回错误: (403) 已禁止。"
+    },
+    {
+        "id":  "runway-image-to-video-prompting",
+        "status":  "failed",
+        "bytes":  0,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\runway-image-to-video-prompting\\original.html",
+        "error":  "远程服务器返回错误: (403) 已禁止。"
+    }
+]

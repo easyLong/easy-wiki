@@ -1,0 +1,39 @@
+﻿[
+    {
+        "id":  "youtube-audience-retention",
+        "status":  "failed",
+        "bytes":  0,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\youtube-audience-retention\\original.html",
+        "error":  "curl exit 7"
+    },
+    {
+        "id":  "dga-dan-attias-interview",
+        "status":  "downloaded",
+        "bytes":  866,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\dga-dan-attias-interview\\original.html"
+    },
+    {
+        "id":  "openai-sora-help",
+        "status":  "downloaded",
+        "bytes":  9830,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\openai-sora-help\\original.html"
+    },
+    {
+        "id":  "openai-video-generation-api",
+        "status":  "downloaded",
+        "bytes":  5489,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\openai-video-generation-api\\original.html"
+    },
+    {
+        "id":  "runway-gen3-prompting",
+        "status":  "downloaded",
+        "bytes":  7653,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\runway-gen3-prompting\\original.html"
+    },
+    {
+        "id":  "runway-image-to-video-prompting",
+        "status":  "downloaded",
+        "bytes":  7505,
+        "path":  "raw\\sources\\expert-research-2026-05-02\\runway-image-to-video-prompting\\original.html"
+    }
+]
